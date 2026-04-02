@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>شهادة NEBOSH مع QR الأصلي</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .certificate-container {
+            position: relative;
+            display: inline-block;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+        .certificate-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        /* تراكب QR code - اضبط الإحداثيات حسب موقع النص الأصلي */
+        .qr-overlay {
+            position: absolute;
+            /* الموقع التقريبي لرقم الشهادة (عدّل هذه القيم) */
+            bottom: 18%;    /* المسافة من الأسفل */
+            left: 38%;      /* المسافة من اليسار */
+            transform: translateX(-50%);
+            background: transparent;
+            padding: 5px;
+            z-index: 10;
+        }
+        #qrcode {
+            width: 80px;    /* حجم QR code - يمكن تغييره */
+            height: 80px;
+            background: white;  /* خلفية بيضاء لظهور QR بشكل واضح */
+            padding: 4px;
+            border-radius: 5px;
+        }
+        #qrcode img {
+            width: 100% !important;
+            height: auto !important;
+        }
+        .info {
+            margin-top: 15px;
+            text-align: center;
+            background: #fff;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="certificate-container">
+        <!-- صورتك الأصلية -->
+        <img class="certificate-image" src="Picsart_26-04-02_21-19-57-542.jpg" alt="شهادة NEBOSH">
+        
+        <!-- مكان ظهور QR code -->
+        <div class="qr-overlay">
+            <div id="qrcode"></div>
+        </div>
+    </div>
+    <div class="info">
+        القيمة الأصلية للـ QR الممسوح: <strong id="dataValue"></strong>
+    </div>
+</div>
+
+<script>
+    // قراءة البيانات من رابط الصفحة (مثل ?data=00784452/1391268)
+    const urlParams = new URLSearchParams(window.location.search);
+    let qrData = urlParams.get('data') || urlParams.get('code') || '00784452/1391268';
+    
+    // عرض القيمة كنص في الأسفل
+    document.getElementById('dataValue').innerText = qrData;
+    
+    // إنشاء QR code بنفس البيانات
+    new QRCode(document.getElementById("qrcode"), {
+        text: qrData,
+        width: 80,   // حجم QR بالبكسل (نفس حجم العنصر)
+        height: 80,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.M
+    });
+</script>
+</body>
+</html>
