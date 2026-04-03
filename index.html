@@ -31,23 +31,24 @@
             height: auto;
             border-radius: 8px;
         }
-        /* تراكب QR code - اضبط الإحداثيات حسب موقع النص الأصلي */
+        /* متغيرات التحكم - غير القيم هنا مباشرة */
         .qr-overlay {
             position: absolute;
-            /* الموقع التقريبي لرقم الشهادة (عدّل هذه القيم) */
-            bottom: 18%;    /* المسافة من الأسفل */
-            left: 38%;      /* المسافة من اليسار */
+            /* الموقع: عدّل القيمتين التاليتين */
+            bottom: 10%;     /* المسافة من الأسفل (جرب 8% إلى 15%) */
+            left: 78%;       /* المسافة من اليسار (جرب 70% إلى 85%) */
             transform: translateX(-50%);
             background: transparent;
             padding: 5px;
             z-index: 10;
         }
         #qrcode {
-            width: 80px;    /* حجم QR code - يمكن تغييره */
-            height: 80px;
-            background: white;  /* خلفية بيضاء لظهور QR بشكل واضح */
+            width: 55px;     /* حجم QR (جرب 50px إلى 70px) */
+            height: 55px;
+            background: white;
             padding: 4px;
             border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
         #qrcode img {
             width: 100% !important;
@@ -66,10 +67,8 @@
 <body>
 <div>
     <div class="certificate-container">
-        <!-- صورتك الأصلية -->
+        <!-- تأكد من اسم الصورة -->
         <img class="certificate-image" src="Picsart_26-04-02_21-19-57-542.jpg" alt="شهادة NEBOSH">
-        
-        <!-- مكان ظهور QR code -->
         <div class="qr-overlay">
             <div id="qrcode"></div>
         </div>
@@ -80,18 +79,14 @@
 </div>
 
 <script>
-    // قراءة البيانات من رابط الصفحة (مثل ?data=00784452/1391268)
     const urlParams = new URLSearchParams(window.location.search);
     let qrData = urlParams.get('data') || urlParams.get('code') || '00784452/1391268';
-    
-    // عرض القيمة كنص في الأسفل
     document.getElementById('dataValue').innerText = qrData;
     
-    // إنشاء QR code بنفس البيانات
     new QRCode(document.getElementById("qrcode"), {
         text: qrData,
-        width: 80,   // حجم QR بالبكسل (نفس حجم العنصر)
-        height: 80,
+        width: 55,
+        height: 55,
         colorDark: "#000000",
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.M
